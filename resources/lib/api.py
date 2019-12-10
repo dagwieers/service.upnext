@@ -61,8 +61,16 @@ class Api:
 
     def play_addon_item(self):
         if self.data.get('play_url'):
-            self.log('Playing the next episode directly: %(play_url)s' % self.data, 2)
+            self.log('Playing the next episode via playlist: %(play_url)s' % self.data, 2)
             jsonrpc(method='Player.Open', params=dict(item=dict(file=self.data.get('play_url'))))
+#            jsonrpc(method='Playlist.Clear')
+#            jsonrpc(method='Playlist.Add', params=dict(playlistid=0, item=dict(file=self.data.get('play_url'))))
+#            jsonrpc(method='Playlist.Insert', params=dict(playlistid=0, position=0, item=[dict(label='Foo bar', file=self.data.get('play_url'))]))
+#            jsonrpc(method='Playlist.Insert', params=dict(playlistid=1, position=1, item=[dict(label='Foo bar', file=self.data.get('play_url'))]))
+#            jsonrpc(method='Player.PlayPause', params=dict(playerid=1, play=False))
+#            jsonrpc(method='Player.Seek', params=dict(playerid=1, value=100.0))
+#            jsonrpc(method='Player.Seek', params=dict(playerid=1, value=dict(percentage=100)))
+#            jsonrpc(method='Player.GoTo', params=dict(playerid=1, to='next'))
         else:
             self.log('Sending %(encoding)s data to add-on to play: %(play_info)s' % dict(encoding=self.encoding, **self.data), 2)
             event(message=self.data.get('id'), data=self.data.get('play_info'), sender='upnextprovider', encoding=self.encoding)

@@ -43,10 +43,21 @@ class PlayItem:
     def get_next(self):
         playlist = PlayList(PLAYLIST_VIDEO)
         position = playlist.getposition()
+
+        # Support play_url
+#        play_url = self.api.data.get('play_url')
+#        if play_url:
+#            self.log('Adding add-on play_url to playlist: %(play_url)s' % self.api.data, 2)
+#            playlist.add(self.api.data.get('play_url'))
+
         # A playlist with only one element has no next item and PlayList().getposition() starts counting from zero
-        if playlist.size() > 1 and position < (playlist.size() - 1):
-            return self.api.get_next_in_playlist(position)
-        return False
+        if playlist.size() <= 1 or position >= (playlist.size() - 1):
+            return False
+
+#        if play_url:
+#            return self.get_episode()
+
+        return self.api.get_next_in_playlist(position)
 
     def handle_now_playing_result(self, result):
         if not result.get('result'):

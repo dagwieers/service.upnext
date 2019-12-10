@@ -10,7 +10,8 @@ from playitem import PlayItem
 from state import State
 from stillwatching import StillWatching
 from upnext import UpNext
-from utils import addon_path, calculate_progress_steps, clear_property, event, get_setting, log as ulog, set_property
+from utils import (addon_path, calculate_progress_steps, clear_property, event, get_setting,
+                   log as ulog, set_property)
 
 
 class PlaybackManager:
@@ -76,6 +77,7 @@ class PlaybackManager:
         if playlist_item:
             # Play playlist media
             self.player.seekTime(self.player.getTotalTime())
+            # jsonrpc(method='Player.Seek', params=dict(playerid=1, value=dict(percentage=100)))
         elif self.api.has_addon_data():
             # Play add-on media
             self.api.play_addon_item()
